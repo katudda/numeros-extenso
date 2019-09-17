@@ -1,4 +1,4 @@
-# Challange 1
+# Challenge 1
 
 Código que leia no terminal um valor numérico representando um valor em reais, e tenha como saída este valor escrito por extenso.
 
