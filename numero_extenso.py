@@ -76,6 +76,5 @@ def centenas(c):
 
 if __name__ == '__main__':
     import sys
-    argc = len(sys.argv)
     print(num_extenso(sys.argv[1]))
 
