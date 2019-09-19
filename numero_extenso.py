@@ -2,19 +2,19 @@ from dicionario import dicionario
 
 def num_extenso(x):
     resultado = ''
-    _int, cent = str(x).split(',')
+    real, centavo = str(x).split(',')
     
-    if len(_int) > 9:
+    if len(real) > 9:
         return 'Este programa só aceita até 9 dígitos antes da vírgula'
 
-    if len(cent) != 2:
+    if len(centavo) != 2:
         return 'Este programa só aceita 2 dígitos depois da vírgula'
 
-    num = str(_int).zfill(9)
+    num = str(real).zfill(9)
     chunks, chunk_size = len(num), 3
+
     splited = [ num[i:i+chunk_size] for i in range(0, chunks, chunk_size) ]
     mi, m, c = splited
-
     
     if int(mi) > 0:
         if int(mi) == 1:
@@ -41,18 +41,18 @@ def num_extenso(x):
     else: 
         resultado += 'reais'
 
-    if int(cent) == 1:
-        resultado += ' e ' + centenas(cent) + 'centavo'
-    elif int(cent) > 0:
-        resultado += ' e ' + centenas(cent) + 'centavos'
+    if int(centavo) == 1:
+        resultado += ' e ' + centenas(centavo) + 'centavo'
+    elif int(centavo) > 0:
+        resultado += ' e ' + centenas(centavo) + 'centavos'
 
     return resultado.strip().capitalize().replace('  ', ' ')
 
 
 def centenas(c):
     resultado = ''
-    cn, dz, un = c.zfill(3)
-    cn, dz, un = int(cn), int(dz), int(un)
+    cn, dz, un = c.zfill(3)    
+    cn, dz, un = int(cn), int(dz), int(un) 
 
     if cn == 1 and dz == 0 and un == 0:
         resultado += dicionario['centena'][int(cn)] + ' ' 
@@ -66,11 +66,16 @@ def centenas(c):
     elif dz == 1 and un > 0:
         resultado += dicionario['dezena'][un+1] + ' ' 
     elif dz > 0:
-        resultado += dicionario['dezenaDez'][dz] + ' e ' 
+        if dz % 2 == 0 or dz < 20:
+            resultado += dicionario['dezenaDez'][dz] + ' ' 
+        else:
+            resultado += dicionario['dezenaDez'][dz] + ' e ' 
 
-    if (dz > 1 or dz == 0) and un <= 9:
+    if dz >= 0 and (un > 0 and un <= 9):
+        if dz > 0 and un > 0:
+            resultado += ' e '    
         resultado += dicionario['unidade'][un] + ' '
-
+    
     return resultado
 
 
